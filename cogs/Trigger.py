@@ -23,7 +23,7 @@ class Trigger(commands.Cog):
             return
 
         if 'dress code' in msg.content.lower():
-            await msg.channel.send('the dress code is to wear clothes')
+            await msg.channel.send('the dress code is to shower and wear clothes')
 
 
 def setup(bot):
