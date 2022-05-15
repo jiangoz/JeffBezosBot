@@ -2,11 +2,9 @@ import asyncio
 import discord
 from discord.ext import commands
 
-# NO COMMANDS HERE, only 1 listener for on_message()
-# Designed specifically for Amazon server
-
 
 class LP(commands.Cog):
+    '''Leadership Principles responses'''
 
     def __init__(self, bot):
         self.bot = bot
@@ -32,12 +30,8 @@ class LP(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, msg: str):
 
-        # ignore self sent messages
-        if msg.author == self.bot.user:
-            return
-
-        # if msg was sent in DM (not in a guild)
-        if msg.guild == None:
+        # ignore self sent messages and DMs
+        if msg.author == self.bot.user or msg.guild is None:
             return
 
         if msg.content.lower() in self.lp:
