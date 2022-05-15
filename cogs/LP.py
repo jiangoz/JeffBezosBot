@@ -43,8 +43,8 @@ class LP(commands.Cog):
         if msg.content.lower() in self.lp:
             await msg.channel.send(self.lp[msg.content.lower()])
 
-        if 'leadership' in msg.content.lower():
-            await msg.channel.send('https://www.amazon.jobs/en/principles')
+        if 'leadership principle' in msg.content.lower():
+            await msg.channel.send('<https://www.amazon.jobs/en/principles>')
 
 
 def setup(bot):
