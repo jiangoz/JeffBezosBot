@@ -15,13 +15,13 @@ Jeff Bezos bot for Amazon Discord server
 0) Setup for VPS
    1) [Get a VPS](https://aws.amazon.com/pm/ec2/?trk=36c6da98-7b20-48fa-8225-4784bced9843&sc_channel=ps&sc_campaign=acquisition&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|Compute|EC2|US|EN|Text&s_kwcid=AL!4422!3!488982705723!e!!g!!aws%20free%20ec2&ef_id=Cj0KCQjwyYKUBhDJARIsAMj9lkEK6oOMduDFrTVEJzqBeOe-eIe5tpIJ-La_0rkax5nCMn1swQ2NGSwaAtt8EALw_wcB:G:s&s_kwcid=AL!4422!3!488982705723!e!!g!!aws%20free%20ec2)
    2) [Install docker](https://docs.docker.com/engine/install/)
-   3) Create ~/jeffbezo-bot directory
+   3) Create ~/jeffbezos-bot directory
         ```
-        mkdir ~/jeffbezo-bot
+        mkdir ~/jeffbezos-bot
         ```
-   4) Create ~/jeffbezo-bot/.env file
+   4) Create ~/jeffbezos-bot/.env file
         ```
-        touch ~/jeffbezo-bot/.env
+        touch ~/jeffbezos-bot/.env
         ```
       1) put bot token inside (ex TOKEN=my token here)
       2) Any other environment variables necessary. Sample .env file:
