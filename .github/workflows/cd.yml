@@ -1,0 +1,48 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+  deploy:
+    name: Deploy
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: build docker image
+        run: |
+          docker build -t jeffbezos-bot .
+          docker save -o jeffbezos-bot.tar jeffbezos-bot
+      - name: docker image to vps
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          source: jeffbezos-bot.tar
+          target: jeffbezos-bot
+      - name: docker run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker load -i ~/jeffbezos-bot/jeffbezos-bot.tar
+            rm ~/jeffbezos-bot/jeffbezos-bot.tar
+            docker kill $(docker ps -q)
+            docker run --env-file ~/jeffbezos-bot/.env -d jeffbezos-bot:latest
+            docker system prune -f
+
+        
+
+
+
