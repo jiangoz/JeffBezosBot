@@ -177,7 +177,7 @@ class Util(commands.Cog):
         ]
 
     @app_commands.command()
-    @app_commands.checks.cooldown(1, 10, key=lambda i: (i.guild_id, i.user.id))
+    @app_commands.checks.cooldown(1, 30, key=lambda i: (i.guild_id, i.user.id))
     async def ping(self, interaction: discord.Interaction) -> None:
         """Is Jeff Bezos still alive? Find out!"""
         await interaction.response.send_message(f'Pong! {round(self.bot.latency*1000)}ms')
@@ -189,7 +189,7 @@ class Util(commands.Cog):
 
     
     @app_commands.command()
-    @app_commands.checks.cooldown(1, 10, key=lambda i: (i.guild_id, i.user.id))
+    @app_commands.checks.cooldown(1, 60, key=lambda i: (i.guild_id, i.user.id))
     async def lookup(self, interaction: discord.Interaction, job_id: str):
         """Find out your team and location!"""
         if not job_id.isnumeric() or len(job_id) != 7:
