@@ -192,7 +192,8 @@ class Util(commands.Cog):
     @app_commands.checks.cooldown(1, 10, key=lambda i: (i.guild_id, i.user.id))
     async def lookup(self, interaction: discord.Interaction, job_id: str):
         """Find out your team and location!"""
-        await interaction.response.send_message(f'{random.choice(self.teams)} , {random.choice(self.cities)}')
+        await interaction.response.send_message(
+            f'Job ID: {job_id}\nTeam: {random.choice(self.teams)} | City: {random.choice(self.cities)}')
     
     @lookup.error
     async def on_lookup_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
