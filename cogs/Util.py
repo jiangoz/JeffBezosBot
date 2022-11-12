@@ -193,7 +193,7 @@ class Util(commands.Cog):
     async def lookup(self, interaction: discord.Interaction, job_id: str):
         """Find out your team and location!"""
         if not job_id.isnumeric() or len(job_id) != 7:
-            await interaction.response.send_message('Please provide a valid job ID')
+            await interaction.response.send_message('Please provide a valid job ID', ephemeral=True)
         else:
             await interaction.response.send_message(
                 f'Job ID: {job_id}\nTeam: {random.choice(self.teams)} | City: {random.choice(self.cities)}')
