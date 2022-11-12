@@ -9,6 +9,7 @@ TOKEN = os.getenv('TOKEN')
 
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 
 bot = commands.Bot(command_prefix=PREFIX,
                    case_insensitive=True, intents=intents)
@@ -28,7 +29,7 @@ async def on_connect():
         cogName = filename[:-3]  # without the '.py' part
         if filename.endswith('.py'):
             try:
-                bot.load_extension(f'cogs.{cogName}')
+                await bot.load_extension(f'cogs.{cogName}')
                 cogcount += 1
                 coglist += cogName + ' | '
             except commands.ExtensionError:
@@ -41,11 +42,10 @@ async def on_connect():
 async def on_ready():
     # load member count & server list
     serverlist = ''
-    guilds = await bot.fetch_guilds().flatten()
-    for guild in guilds:
+    for guild in bot.guilds:
         serverlist += guild.name+' | '
     print(f'{len(bot.users)} members total')
-    print(f'In {len(guilds)} servers: {serverlist[:-3]}')
+    print(f'In {len(bot.guilds)} servers: {serverlist[:-3]}')
 
     print('\nBOT IS READY!')
 

@@ -20,5 +20,5 @@ class Trigger(commands.Cog):
             await msg.channel.send('the dress code is to shower and wear clothes')
 
 
-def setup(bot):
-    bot.add_cog(Trigger(bot))
+async def setup(bot):
+    await bot.add_cog(Trigger(bot))
