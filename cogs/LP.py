@@ -41,5 +41,5 @@ class LP(commands.Cog):
             await msg.channel.send('<https://www.amazon.jobs/en/principles>')
 
 
-def setup(bot):
-    bot.add_cog(LP(bot))
+async def setup(bot):
+    await bot.add_cog(LP(bot))
