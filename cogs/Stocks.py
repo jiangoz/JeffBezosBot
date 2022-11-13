@@ -61,7 +61,7 @@ class Stocks(commands.Cog):
         fig.write_image(file_name)
 
         await interaction.response.send_message(
-            f'{ticker_symbol.upper()} Current Price: `{current_price}`\nMarket Cap: `{market_cap}`',
+            f'{ticker_symbol.upper()} Current Price: `${current_price}`\nMarket Cap: `${market_cap:,}`',
             file=discord.File(file_name))
         
         if os.path.exists(file_name):
