@@ -196,7 +196,8 @@ class Util(commands.Cog):
             await interaction.response.send_message('Please provide a valid job ID', ephemeral=True)
         else:
             await interaction.response.send_message(
-                f'Job ID: {job_id}\nTeam: {random.choice(self.teams)} | City: {random.choice(self.cities)}')
+                f'Job ID: {job_id}\nTeam: {random.choice(self.teams)} | City: {random.choice(self.cities)}'
+                + '\n||This is a fake/joke cmd. You should ask a current employee instead.||')
     
     @lookup.error
     async def on_lookup_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
