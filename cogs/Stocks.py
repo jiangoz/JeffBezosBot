@@ -127,13 +127,13 @@ class Stocks(commands.Cog):
         y4 = y3_6mo + relativedelta(months=6)
 
         await interaction.response.send_message(
-            f"**{ticker_symbol.upper()}** past 30 day average: `${avg}`\n"
-            + f"{y1.strftime('%x')} | `{0.05*shares}` units | `${0.05*shares*avg}`"
-            + f"{y2.strftime('%x')} | `{0.15*shares}` units | `${0.15*shares*avg}`"
-            + f"{y2_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
-            + f"{y3.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
-            + f"{y3_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
-            + f"{y4.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
+            f"**{ticker_symbol.upper()}** past 30 day average: `${avg}` | Timezone: PST\n"
+            + f"{y1.strftime('%x')} | `{0.05*shares}` units | `${0.05*shares*avg}`\n"
+            + f"{y2.strftime('%x')} | `{0.15*shares}` units | `${0.15*shares*avg}`\n"
+            + f"{y2_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`\n"
+            + f"{y3.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`\n"
+            + f"{y3_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`\n"
+            + f"{y4.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`\n"
             + f"Total | `{shares}` units | `${amount_usd}`"
         )
     
