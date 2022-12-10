@@ -115,8 +115,8 @@ class Stocks(commands.Cog):
             return
 
         history_df = stock.history('1mo', '1d')
-        avg = round(history_df['Close'].mean(), 7)
-        shares = amount_usd / avg
+        avg = round(history_df['Close'].mean(), 2)
+        shares = round(amount_usd / avg, 2)
 
         today = datetime.now(timezone(-timedelta(hours=8))) # PST
         y1 = today + relativedelta(years=1)
@@ -128,13 +128,13 @@ class Stocks(commands.Cog):
 
         await interaction.response.send_message(
             f"**{ticker_symbol.upper()}** past 30 day average: `${avg}`\n"
-            + f"{y1.strftime('%x')} | `{round(0.05*shares, 7)}` units | `${round(0.05*shares*avg, 2)}`\n"
-            + f"{y2.strftime('%x')} | `{round(0.15*shares, 7)}` units | `${round(0.15*shares*avg, 2)}`\n"
-            + f"{y2_6mo.strftime('%x')} | `{round(0.2*shares, 7)}` units | `${round(0.2*shares*avg, 2)}`\n"
-            + f"{y3.strftime('%x')} | `{round(0.2*shares, 7)}` units | `${round(0.2*shares*avg, 2)}`\n"
-            + f"{y3_6mo.strftime('%x')} | `{round(0.2*shares, 7)}` units | `${round(0.2*shares*avg, 2)}`\n"
-            + f"{y4.strftime('%x')} | `{round(0.2*shares, 7)}` units | `${round(0.2*shares*avg, 2)}`\n"
-            + f"Total | `{round(shares, 7)}` units | `${amount_usd}`| TZ: PST"
+            + f"{y1.strftime('%x')} | `{round(0.05*shares, 2)}` units | `${round(0.05*shares*avg, 2)}`\n"
+            + f"{y2.strftime('%x')} | `{round(0.15*shares, 2)}` units | `${round(0.15*shares*avg, 2)}`\n"
+            + f"{y2_6mo.strftime('%x')} | `{round(0.2*shares, 2)}` units | `${round(0.2*shares*avg, 2)}`\n"
+            + f"{y3.strftime('%x')} | `{round(0.2*shares, 2)}` units | `${round(0.2*shares*avg, 2)}`\n"
+            + f"{y3_6mo.strftime('%x')} | `{round(0.2*shares, 2)}` units | `${round(0.2*shares*avg, 2)}`\n"
+            + f"{y4.strftime('%x')} | `{round(0.2*shares, 2)}` units | `${round(0.2*shares*avg, 2)}`\n"
+            + f"Total | `{shares}` units | `${amount_usd}`| TZ: PST"
         )
     
     @rsu.error
