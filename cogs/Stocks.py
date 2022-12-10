@@ -8,7 +8,8 @@ import os
 import discord
 from discord import app_commands
 from discord.ext import commands
-
+from datetime import datetime, timezone, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 class Stocks(commands.Cog):
@@ -81,6 +82,63 @@ class Stocks(commands.Cog):
     
     @stocks.error
     async def on_stocks_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+        if isinstance(error, app_commands.CommandOnCooldown):
+            await interaction.response.send_message(str(error), ephemeral=True)
+    
+
+    @app_commands.command()
+    @app_commands.checks.cooldown(1, 30, key=lambda i: (i.guild_id, i.user.id))
+    async def rsu(self, 
+        interaction: discord.Interaction,
+        amount_usd: int, 
+        ticker_symbol: str = 'AMZN', 
+        ):
+        """Calculate RSU vesting based on the average price in past 30 days"""
+
+        if amount_usd <= 0:
+            await interaction.response.send_message(
+                'Please provide a positive amount of stocks in USD', 
+                ephemeral=True)
+            return
+
+        if amount_usd > 100000000000:
+            await interaction.response.send_message(
+                'You ain\'t a multibillionaire, skill issue!', 
+                ephemeral=True)
+            return
+
+        stock = yf.Ticker('AMZN')
+        stock_info = stock.info
+
+        if (stock_info['regularMarketPrice'] is None):
+            await interaction.response.send_message('Please provide a valid ticker symbol', ephemeral=True)
+            return
+
+        history_df = stock.history('1mo', '1d')
+        avg = history_df['Close'].mean()
+        shares = amount_usd / avg
+
+        today = datetime.now(timezone(-timedelta(hours=8))) # PST
+        y1 = today + relativedelta(years=1)
+        y2 = y1 + relativedelta(years=1)
+        y2_6mo = y2 + relativedelta(months=6)
+        y3 = y2_6mo + relativedelta(months=6)
+        y3_6mo = y3 + relativedelta(months=6)
+        y4 = y3_6mo + relativedelta(months=6)
+
+        await interaction.response.send_message(
+            f"**{ticker_symbol.upper()}** past 30 day average: `${avg}`\n"
+            + f"{y1.strftime('%x')} | `{0.05*shares}` units | `${0.05*shares*avg}`"
+            + f"{y2.strftime('%x')} | `{0.15*shares}` units | `${0.15*shares*avg}`"
+            + f"{y2_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
+            + f"{y3.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
+            + f"{y3_6mo.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
+            + f"{y4.strftime('%x')} | `{0.2*shares}` units | `${0.2*shares*avg}`"
+            + f"Total | `{shares}` units | `${amount_usd}`"
+        )
+    
+    @rsu.error
+    async def on_rsu_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CommandOnCooldown):
             await interaction.response.send_message(str(error), ephemeral=True)
 
