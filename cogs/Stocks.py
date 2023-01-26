@@ -46,12 +46,13 @@ class Stocks(commands.Cog):
         stock = yf.Ticker(ticker_symbol.upper())
         stock_info = stock.info
 
-        if (stock_info['regularMarketPrice'] is None):
+        if (stock_info is None):
             await interaction.response.send_message('Please provide a valid ticker symbol', ephemeral=True)
             return
 
-        current_price = stock_info['currentPrice']
-        market_cap = stock_info['marketCap']
+        stock_fast_info = stock.fast_info
+        current_price = stock_fast_info['last_price']
+        market_cap = stock_fast_info['market_cap']
 
         history_df = stock.history(period, self.periods[period])
         fig = px.line(history_df, y='Close', template='plotly_dark')
@@ -110,7 +111,7 @@ class Stocks(commands.Cog):
         stock = yf.Ticker('AMZN')
         stock_info = stock.info
 
-        if (stock_info['regularMarketPrice'] is None):
+        if (stock_info is None):
             await interaction.response.send_message('Please provide a valid ticker symbol', ephemeral=True)
             return
 
