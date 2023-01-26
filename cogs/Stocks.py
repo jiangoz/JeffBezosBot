@@ -51,8 +51,8 @@ class Stocks(commands.Cog):
             return
 
         stock_fast_info = stock.fast_info
-        current_price = stock_fast_info['last_price']
-        market_cap = stock_fast_info['market_cap']
+        current_price = round(stock_fast_info['last_price'], 2)
+        market_cap = round(stock_fast_info['market_cap'])
 
         history_df = stock.history(period, self.periods[period])
         fig = px.line(history_df, y='Close', template='plotly_dark')
