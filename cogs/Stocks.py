@@ -54,6 +54,9 @@ class Stocks(commands.Cog):
         current_price = round(stock_fast_info['last_price'], 2)
         market_cap = round(stock_fast_info['market_cap'])
 
+        print(f'DEBUG: curr price: {current_price}')
+        print(f'DEBUG: market cap: {market_cap}')
+
         history_df = stock.history(period, self.periods[period])
         fig = px.line(history_df, y='Close', template='plotly_dark')
         fig.update_traces(line_color='#FF9900')
@@ -61,6 +64,8 @@ class Stocks(commands.Cog):
         rand_str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
         file_name = f'stocks{rand_str}.png'
         fig.write_image(file_name)
+
+        print('DEBUG: image file written')
 
         await interaction.response.send_message(
             f'**{ticker_symbol.upper()}** Current Price: `${current_price}`\nMarket Cap: `${market_cap:,}`',
