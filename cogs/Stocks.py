@@ -44,15 +44,15 @@ class Stocks(commands.Cog):
         """Look up a stock and graph it"""
         
         stock = yf.Ticker(ticker_symbol.upper())
-        stock_info = stock.info
-
-        if (stock_info is None):
-            await interaction.response.send_message('Please provide a valid ticker symbol', ephemeral=True)
+        try:
+            stock_info = stock.info
+        except:
+            await interaction.response.send_message('Stock info not found. Please try again.', 
+                                                    ephemeral=True)
             return
 
-        stock_fast_info = stock.fast_info
-        current_price = round(stock_fast_info['last_price'], 2)
-        market_cap = round(stock_fast_info['market_cap'])
+        current_price = round(stock_info['currentPrice'], 2)
+        market_cap = round(stock_info['marketCap'])
 
         print(f'DEBUG: curr price: {current_price}')
         print(f'DEBUG: market cap: {market_cap}')
@@ -113,11 +113,12 @@ class Stocks(commands.Cog):
                 ephemeral=True)
             return
 
-        stock = yf.Ticker('AMZN')
-        stock_info = stock.info
-
-        if (stock_info is None):
-            await interaction.response.send_message('Please provide a valid ticker symbol', ephemeral=True)
+        stock = yf.Ticker(ticker_symbol.upper())
+        try:
+            stock_info = stock.info
+        except:
+            await interaction.response.send_message('Stock info not found. Please try again.', 
+                                                    ephemeral=True)
             return
 
         history_df = stock.history('1mo', '1d')
