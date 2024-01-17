@@ -47,16 +47,12 @@ class Stocks(commands.Cog):
         try:
             stock_info = stock.info
         except:
-            print(f'DEBUG STOCKS: {stock_info.__dict__}')
             await interaction.response.send_message('Stock info not found. Please try again.', 
                                                     ephemeral=True)
             return
 
         current_price = round(stock_info['currentPrice'], 2)
         market_cap = round(stock_info['marketCap'])
-
-        print(f'DEBUG: curr price: {current_price}')
-        print(f'DEBUG: market cap: {market_cap}')
 
         history_df = stock.history(period, self.periods[period])
         fig = px.line(history_df, y='Close', template='plotly_dark')
@@ -65,8 +61,6 @@ class Stocks(commands.Cog):
         rand_str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
         file_name = f'stocks{rand_str}.png'
         fig.write_image(file_name)
-
-        print('DEBUG: image file written')
 
         await interaction.response.send_message(
             f'**{ticker_symbol.upper()}** Current Price: `${current_price}`\nMarket Cap: `${market_cap:,}`',
@@ -118,7 +112,6 @@ class Stocks(commands.Cog):
         try:
             stock_info = stock.info
         except:
-            print(f'DEBUG RSU: {stock_info.__dict__}')
             await interaction.response.send_message('Stock info not found. Please try again.', 
                                                     ephemeral=True)
             return
