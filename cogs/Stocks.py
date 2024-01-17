@@ -44,11 +44,10 @@ class Stocks(commands.Cog):
         """Look up a stock and graph it"""
         
         stock = yf.Ticker(ticker_symbol.upper())
-        print(f'DEBUG: {stock.__dict__}')
         try:
             stock_info = stock.info
-            print(f'DEBUG STOCKS: {stock_info.__dict__}')
         except:
+            print(f'DEBUG STOCKS: {stock_info.__dict__}')
             await interaction.response.send_message('Stock info not found. Please try again.', 
                                                     ephemeral=True)
             return
@@ -118,8 +117,8 @@ class Stocks(commands.Cog):
         stock = yf.Ticker(ticker_symbol.upper())
         try:
             stock_info = stock.info
-            print(f'DEBUG RSU: {stock_info.__dict__}')
         except:
+            print(f'DEBUG RSU: {stock_info.__dict__}')
             await interaction.response.send_message('Stock info not found. Please try again.', 
                                                     ephemeral=True)
             return
